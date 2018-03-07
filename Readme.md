@@ -4,13 +4,13 @@
 make install
 
 ## run the daemon
-make run endpoint=127.0.0.1:9001 address=127.0.0.1:8000
+make run
 
 ## build an executable for your platform
 make build
 
 ### configuration options of the daemon
--endpoint -> bind address of the daemon
+-endpoint -> bind address of the daemon  
 -address -> server address which accepts the data (spiler portal address)
 
 ### test with netcat ubuntu package
