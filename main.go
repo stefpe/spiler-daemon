@@ -1,18 +1,19 @@
 package main
 
 import (
+	"bytes"
+	"flag"
+	"io"
 	"log"
 	"net"
-	"bytes"
-	"io"
-	"flag"
 	"net/http"
 	"time"
+
 	"github.com/franela/goreq"
 )
 
 const (
-	Protocol    = "tcp"
+	Protocol   = "tcp"
 	Address    = "127.0.0.1:9001"
 	BufferSize = 1024
 )
@@ -42,15 +43,19 @@ func handleClient(conn net.Conn) {
 }
 
 //post data to an endpoint
-func postData(data, endPoint string){
-	_, _ = goreq.Request{
-		Method: http.MethodPost,
+func postData(data, endPoint string) {
+	_, err := goreq.Request{
+		Method:      http.MethodPost,
 		ContentType: "application/json",
-		Accept: "application/json",
-		Uri:     endPoint,
-		Timeout: 500 * time.Millisecond,
-		Body: data,
+		Accept:      "application/json",
+		Uri:         endPoint,
+		Timeout:     500 * time.Millisecond,
+		Body:        data,
 	}.Do()
+
+	if err != nil {
+		log.Println(err.Error())
+	}
 }
 
 //handles incoming data
@@ -87,6 +92,10 @@ func main() {
 	address := flag.String("address", Address, "e.g. 127.0.0.1:9001")
 	endPoint := flag.String("endpoint", "", "e.g. Portal endpoint 127.0.0.1:8080")
 	flag.Parse()
+
+	if len(*endPoint) == 0 {
+		log.Fatal("please provide an endpoint which will accept posted data")
+	}
 
 	go handleEvents(*endPoint)
 	runTcpServer(*address)
