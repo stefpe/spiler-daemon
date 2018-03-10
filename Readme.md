@@ -22,3 +22,4 @@ php -S localhost:8000 -> runs local php server which accepts the data at: localh
 
 ### Todos
     - add api key support for portal connection
+    - introduce file logging
