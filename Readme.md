@@ -19,3 +19,6 @@ nc 127.0.0.1 9001
 ### test with php file (client and server)
 php send.php -> sends data to 127.0.0.1:9000  
 php -S localhost:8000 -> runs local php server which accepts the data at: localhost:8000/server.php
+
+### Todos
+    - add api key support for portal connection
